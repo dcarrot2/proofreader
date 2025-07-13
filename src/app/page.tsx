@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button";
 import { GeminiProvider } from "./llm_provider";
 import { createClient, TABLES } from "./utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const promptFactory = (ruleset: string[], text: string) => {
   return `
@@ -58,7 +60,7 @@ export async function submitText(formData: FormData) {
     original_text: text,
     selected_options: options,
     prompt,
-    response,
+    proofread_text: response,
   });
 
   if (error) {
@@ -100,13 +102,45 @@ export default async function Home() {
 
 function TextArea() {
   return (
-    <form action={submitText}>
-      <div className="flex flex-col gap-4 items-center">
+    <form action={async (formData) => {
+      'use server';
+
+      const text = formData.get("text") as string;
+      const grammar = formData.get("grammar") as string;
+      const formatting = formData.get("formatting") as string;
+      const punctuation = formData.get("punctuation") as string;
+      const spelling = formData.get("spelling") as string;
+      const conciseness = formData.get("conciseness") as string;
+
+      const options = [grammar, formatting, punctuation, spelling, conciseness].join(',');
+
+      const revisedFormData = new FormData();
+      revisedFormData.set("text", text);
+      revisedFormData.set('options', options);
+
+      await submitText(revisedFormData);
+    }}>
+      <div className="flex flex-col gap-4 items-center mb-6">
         <textarea
           name="text"
           placeholder="Enter the piece of text to edit"
           className="border border-gray-300 rounded-md p-2 w-3/5 h-[350px]"
         />
+      </div>
+      <div className="flex items-center justify-center gap-4 mb-6">
+        <Checkbox id="grammar" name="grammar" defaultChecked defaultValue="grammar" />
+        <Label htmlFor="grammar">Grammar</Label>
+        <Checkbox id="formatting" name="formatting" defaultChecked defaultValue="formatting" />
+        <Label htmlFor="formatting">Formatting</Label>
+        <Checkbox id="punctuation" name="punctuation" defaultChecked defaultValue="punctuation" />
+        <Label htmlFor="punctuation">Punctuation</Label>
+        <Checkbox id="spelling" name="spelling" defaultChecked defaultValue="spelling" />
+        <Label htmlFor="spelling">Spelling</Label>
+        <Checkbox id="conciseness" name="conciseness" defaultChecked defaultValue="conciseness" />
+        <Label htmlFor="conciseness">Conciseness</Label>
+      </div>
+
+      <div className="flex items-center justify-center gap-4">
         <Button type="submit">Submit</Button>
       </div>
     </form>
