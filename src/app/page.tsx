@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { GeminiProvider } from "./llm_provider";
 import { createClient, TABLES } from "./utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -106,7 +107,7 @@ function TextArea() {
           placeholder="Enter the piece of text to edit"
           className="border border-gray-300 rounded-md p-2 w-3/5 h-[350px]"
         />
-        <button type="submit">Submit</button>
+        <Button type="submit">Submit</Button>
       </div>
     </form>
   );
