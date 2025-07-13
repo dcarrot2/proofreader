@@ -1,0 +1,3 @@
+ALTER TABLE submissions
+ADD COLUMN prompt TEXT NOT NULL,
+ADD COLUMN proofread_text TEXT NOT NULL;
