@@ -105,14 +105,17 @@ function TextArea() {
     <form action={async (formData) => {
       'use server';
 
-      const text = formData.get("text") as string;
-      const grammar = formData.get("grammar") as string;
-      const formatting = formData.get("formatting") as string;
-      const punctuation = formData.get("punctuation") as string;
-      const spelling = formData.get("spelling") as string;
-      const conciseness = formData.get("conciseness") as string;
+      const selectedOptions: string[] = [];
+      const checkboxes = ['grammar', 'formatting', 'punctuation', 'spelling', 'conciseness'];
+      checkboxes.forEach((checkbox) => {
+        const value = formData.get(checkbox) as string;
+        if (value) {
+          selectedOptions.push(value);
+        }
+      });
 
-      const options = [grammar, formatting, punctuation, spelling, conciseness].join(',');
+      const text = formData.get("text") as string;
+      const options = selectedOptions.join(',');
 
       const revisedFormData = new FormData();
       revisedFormData.set("text", text);
@@ -128,15 +131,15 @@ function TextArea() {
         />
       </div>
       <div className="flex items-center justify-center gap-4 mb-6">
-        <Checkbox id="grammar" name="grammar" defaultChecked defaultValue="grammar" />
+        <Checkbox id="grammar" name="grammar" defaultChecked value="grammar" />
         <Label htmlFor="grammar">Grammar</Label>
-        <Checkbox id="formatting" name="formatting" defaultChecked defaultValue="formatting" />
+        <Checkbox id="formatting" name="formatting" defaultChecked value="formatting" />
         <Label htmlFor="formatting">Formatting</Label>
-        <Checkbox id="punctuation" name="punctuation" defaultChecked defaultValue="punctuation" />
+        <Checkbox id="punctuation" name="punctuation" defaultChecked value="punctuation" />
         <Label htmlFor="punctuation">Punctuation</Label>
-        <Checkbox id="spelling" name="spelling" defaultChecked defaultValue="spelling" />
+        <Checkbox id="spelling" name="spelling" defaultChecked value="spelling" />
         <Label htmlFor="spelling">Spelling</Label>
-        <Checkbox id="conciseness" name="conciseness" defaultChecked defaultValue="conciseness" />
+        <Checkbox id="conciseness" name="conciseness" defaultChecked value="conciseness" />
         <Label htmlFor="conciseness">Conciseness</Label>
       </div>
 
