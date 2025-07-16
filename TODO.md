@@ -3,11 +3,11 @@
 ## 🚀 Core Features
 
 ### 1. Loading State for Form Submission
-- [ ] **Add loading state to submit button**
-  - [ ] Disable button during submission
+- [x] **Add loading state to submit button**
+  - [x] Disable button during submission
   - [ ] Show spinner/loading indicator
-  - [ ] Change button text to "Processing..."
-  - [ ] Prevent multiple submissions
+  - [x] Change button text to "Processing..."
+  - [x] Prevent multiple submissions
 
 - [ ] **Add loading state to form**
   - [ ] Disable all form inputs during submission
