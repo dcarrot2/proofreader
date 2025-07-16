@@ -61,11 +61,14 @@ export async function submitText(prevState: unknown, formData: FormData) {
   });
 
   if (error) {
-    throw new Error(`Unable to save submission: ${error.message}`);
+    console.error(error);
+    return { message: `Unable to save submission` };
   }
+
 
   // TODO: Revalidate cache.
   // Redirect to the submission page.
+  return { message: 'Submission saved' }
 }
 
 export async function postForm(prevState: unknown, formData: FormData) {
@@ -78,7 +81,6 @@ export async function postForm(prevState: unknown, formData: FormData) {
     "conciseness",
   ];
 
-  console.log({ prevState, formData})
   checkboxes.forEach((checkbox) => {
     const value = formData.get(checkbox) as string;
     if (value) {

@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@radix-ui/react-checkbox";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@radix-ui/react-label";
 import { useActionState } from "react";
 import { postForm } from "../server/actions";
@@ -19,7 +19,6 @@ export default function TextArea() {
           name="text"
           placeholder="Enter the piece of text to edit"
           className="border border-gray-300 rounded-md p-2 w-3/5 h-[350px]"
-          disabled={pending}
         />
       </div>
       <div className="flex items-center justify-center gap-4 mb-6">
